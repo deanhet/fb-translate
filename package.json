@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "facebook-chat-api": "^1.1.0",
-    "google-translate": "^1.0.6"
+    "google-translate": "^1.0.6",
+    "readline-sync": "^1.4.3"
   }
 }
