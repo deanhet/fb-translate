@@ -3,6 +3,27 @@ import readlineSync from 'readline-sync';
 import credentials from './credentials';
 const googleTranslate = require('google-translate')(credentials.translateAPIKey);
 
+async function getInput(){
+  let userInput = await readlineSync.question('> ');
+  return userInput;
+}
+
+async function translate(fromLanguage, toLanguage, input){
+  return new Promise(async function(resolve, reject){
+    try{
+      await googleTranslate.translate(input, fromLanguage, toLanguage, function(err, translation){
+        if(err){
+          throw new Error(err);
+        }
+        resolve(translation.translatedText);
+      })
+    } catch(error){
+      console.log(error);
+      reject(error);
+    }
+  })
+}
+
 login({
   email: credentials.fbEmail,
   password: credentials.fbPassword,
@@ -14,7 +35,7 @@ login({
 
     api.setOptions({listenEvents: true});
 
-    var stopListening = api.listen(function(err, event) {
+    var stopListening = api.listen(async function(err, event) {
         if(err) return console.error(err);
         switch(event.type) {
           case "message":
@@ -26,15 +47,9 @@ login({
               if(err) console.log(err);
             });
             console.log(event.body);
-            googleTranslate.translate(event.body, 'ro', 'en', function(err, translation){
-              console.log(translation.translatedText + '\n');
-            });
-            let test = readlineSync.question('> ');
-            console.log(test);
-            googleTranslate.translate(test, 'en', 'ro', function(err, translation){
-              console.log(translation.translatedText + '\n');
-              api.sendMessage("TEST BOT: " + translation.translatedText, event.threadID);
-            });
+            console.log(await translate('ro', 'en', event.body));
+            let response = await getInput();
+            api.sendMessage(await translate('en', 'ro', response), event.threadID);
             break;
           case "event":
             console.log(event);
