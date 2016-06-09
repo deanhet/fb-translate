@@ -1,12 +1,13 @@
 # fb-translate
 A simple script that hooks into facebook and google translate api's. Allowing you to speak to different languages on the fly!
 
-Example:
-Person 1: Sends you a message in Romanian
-You: Recieve message translated to English
-You: Send reply in English
-Person: Recieves your reply in Romanian
-
+Example: 
+```
+ Friend: Sends you a message in Romanian
+ You: Recieve message translated to English 
+ You: Send reply in English 
+ Friend: Recieves your reply in Romanian
+```
 ## How to use ##
 - Install `node` and `npm`
 - Change to that directory and run `npm install`
