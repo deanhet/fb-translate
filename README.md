@@ -7,6 +7,7 @@ A simple script that hooks into facebook and google translate api's. Speak to di
 - Open `credentials.js`, you'll need to input your facebook username, password, a google-translate API key and the languages you're going to translate between.
 - Run `npm start`
 - Wait for somebody to message you.
+- Have facebook open in a tab, just to keep an eye on what the script is sending/receiving
 
 ## Limitations ##
 - The script currently waits for someone to message you first. It's all purely reactive right now.
