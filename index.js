@@ -52,9 +52,9 @@ login({
             });
             console.log(`${moment().format('hh:mm:ss')}:`)
             console.log(`Original: ${event.body}`);
-            console.log(`Translation: ${await translate('ro', 'en', event.body)}`);
+            console.log(`Translation: ${await translate(credentials.fromLanguage, credentials.toLanguage, event.body)}`);
             let response = await getInput();
-            api.sendMessage(await translate('en', 'ro', response), event.threadID);
+            api.sendMessage(await translate(credentials.toLanguage, credentials.fromLanguage, response), event.threadID);
             break;
           case "event":
             console.log(event);
