@@ -1,6 +1,8 @@
 import login from 'facebook-chat-api';
 import readlineSync from 'readline-sync';
 import credentials from './credentials';
+import moment from 'moment';
+
 const googleTranslate = require('google-translate')(credentials.translateAPIKey);
 
 async function getInput(){
@@ -18,7 +20,6 @@ async function translate(fromLanguage, toLanguage, input){
         resolve(translation.translatedText);
       })
     } catch(error){
-      console.log(error);
       reject(error);
     }
   })
@@ -33,7 +34,10 @@ login({
 }, function callback(err, api){
     if(err) return console.error(err);
 
-    api.setOptions({listenEvents: true});
+    api.setOptions({
+      listenEvents: true,
+      logLevel: 'error'
+    });
 
     var stopListening = api.listen(async function(err, event) {
         if(err) return console.error(err);
@@ -46,8 +50,9 @@ login({
             api.markAsRead(event.threadID, function(err) {
               if(err) console.log(err);
             });
-            console.log(event.body);
-            console.log(await translate('ro', 'en', event.body));
+            console.log(`${moment().format('hh:mm:ss')}:`)
+            console.log(`Original: ${event.body}`);
+            console.log(`Translation: ${await translate('ro', 'en', event.body)}`);
             let response = await getInput();
             api.sendMessage(await translate('en', 'ro', response), event.threadID);
             break;
