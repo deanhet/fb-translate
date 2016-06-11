@@ -38,6 +38,12 @@ login({
       listenEvents: true,
       logLevel: 'error'
     });
+    let friendsList = [];
+
+  api.getFriendsList(function(err, data) {
+    if(err) return console.error(err);
+    friendsList = data;
+  });
 
     var stopListening = api.listen(async function(err, event) {
         if(err) return console.error(err);
@@ -50,7 +56,7 @@ login({
             api.markAsRead(event.threadID, function(err) {
               if(err) console.log(err);
             });
-            console.log(`${moment().format('hh:mm:ss')}:`)
+            console.log(`${friendsList.find((friend) => friend.userID == event.senderID).fullName} : ${moment().format('hh:mm:ss')}`)
             console.log(`Original: ${event.body}`);
             console.log(`Translation: ${await translate(credentials.fromLanguage, credentials.toLanguage, event.body)}`);
             let response = await getInput();
