@@ -19,7 +19,7 @@ Example:
 ## Limitations ##
 - The script currently waits for someone to message you first. It's all purely reactive right now.
 - If you chat through the script, it will translate for everyone you chat to.
-- It will not tell you who has started speaking to you. Just comes up with the message.
+- Fixed: ~~It will not tell you who has started speaking to you. Just comes up with the message.~~
 - You may have to disable two factor authentication/login review on facebook to get login working.
 - You will reply to whoever has messaged you, conversations are threaded as they come in.
 
